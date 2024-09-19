@@ -10,15 +10,16 @@ function App() {
 
   function addItem(e) {
     
-    e.preventDefault()
-
     const item = new FormData(e.target)
-    let name = item.get('nameItem')
-    let quantity = item.get('countItem')
+    let name = item.get("nameItem")
+    let quantity = item.get("countItem")
     let isPurchase = false
 
     const newItem = {
-      id: uuidv4(), name, quantity, isPurchase
+      id: uuidv4(), 
+      name, 
+      quantity, 
+      isPurchase
     }
 
     setList((prevList)=>[...prevList, newItem])
