@@ -25,7 +25,49 @@ function App() {
     setList((prevList)=>[...prevList, newItem])
     e.target.reset();
   }
+
+  function deleteItem(id){
+    setList(list.filter(item => item.id !== id))
+  }
+
+  function modifyItem(e, closePopUp, id){
+    e.preventDefault()
+
+    const item = new FormData(e.target)
+    let name = item.get("nameItem")
+    let quantity = item.get("quantityItem")
+
+    if(name === '') {
+      alert("No se puede ingresar un producto vacio")
+    }
+    else if(quantity === 0) {
+      alert("No se puede ingresar una cantidad nula")
+    }
+    else {
+      setList((prevList) => prevList.map((item) => 
+        (item.id === id
+        ? {...item,name,quantity}
+        : item)));
+    closePopUp();
+    }
+  }
   
+  function checkedItem(id) {
+    console.log("Check!");
+    setList((prevList) => {
+        const updatedList = prevList.map((item) => 
+            item.id === id 
+            ? { ...item, isPurchase: !item.isPurchase}
+            : item
+        );
+
+        const uncheckedItems = updatedList.filter(item => !item.isPurchase)
+        const checkedItems = updatedList.filter(item => item.isPurchase)
+        
+        return [...uncheckedItems, ...checkedItems]
+    })
+}
+
   return(
     <>
       <div className='App'>
@@ -42,11 +84,13 @@ function App() {
           :
           list.map((itemMap) => (
             <Item key = {itemMap.id} 
-                  item={itemMap}/>
+                  item={itemMap}
+                  deleteItem_Callback={deleteItem}
+                  modifyItem_Callback={modifyItem}
+                  checkedList_Callback={checkedItem}/>
           ))
         }
       </ul>
-      {console.table(list)}
     </>
   );
 }
