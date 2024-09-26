@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import './NewItem.css';
+import {Buttons} from './Buttons.jsx'
 
 export function NewItem({addItem_Callback}) {
 
-    const [countItem, setCountItem] = useState(0)
+    const [countItem, setCountItem] = useState(1)
     const[nameItem, setNameItem] = useState('')
 
     const controlador = (e) => {
@@ -18,7 +19,7 @@ export function NewItem({addItem_Callback}) {
         else {
             addItem_Callback(e)
             setNameItem('')
-            setCountItem(0)
+            setCountItem(1)
         }
     }
 
@@ -28,13 +29,13 @@ export function NewItem({addItem_Callback}) {
             <h1>Lista de Compras</h1>
         </header>
 
-        <form onSubmit={controlador}>
-            <input name="nameItem" placeholder='Ingresar producto' type='text' value={nameItem} onChange={(e) => setNameItem(e.target.value)}></input>
-            <input name="countItem" placeholder='Cantidad' type='number' value={countItem} onChange={(e) => setCountItem(Number(e.target.value))}></input>
+        <form className='form' onSubmit={controlador}>
+            <input className='inputNewItem' name="nameItem" placeholder='Ingresar producto' type='text' value={nameItem} onChange={(e) => setNameItem(e.target.value)}></input>
+            <input className='inputNewItem' name="countItem" placeholder='Cantidad' type='number' value={countItem} min="1"onChange={(e) => setCountItem(Number(e.target.value))}></input>
 
-            <button type='button' onClick={()=>setCountItem(count => count + 1)}>+</button>
-            <button type='button' onClick={()=>setCountItem(count => count <= 0 ? 0 : count-1)}>-</button>
-            <button>Agregar a la Lista</button>
+            <div className="buttons">
+                <Buttons count={{countItem, setCountItem}}/>
+            </div>
         </form>
         </>
     )

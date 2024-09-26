@@ -79,7 +79,7 @@ function App() {
           list.length === 0
           ?
           <div className='noItems'>
-            <p>No hay cosas para comprar...</p>
+            <p>No hay productos en la lista para comprar...</p>
           </div>
           :
           list.map((itemMap) => (
